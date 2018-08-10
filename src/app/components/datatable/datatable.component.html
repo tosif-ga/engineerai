@@ -1,0 +1,59 @@
+<!-- Loader -->
+<div class="my-container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+</div>
+<!-- Loader -->
+
+<!-- Main Content -->
+<div class="container" *ngIf="!loading">
+
+  <!-- Search box -->
+  <div class="row margin-top-15">
+    <div class="col-sm-3 ml-auto">
+      <form class="search-form">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control search-input" [(ngModel)]="searchtext" name="search" id="search" placeholder="Search">
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Search box -->
+
+  <!-- Table content -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Url</th>
+              <th scope="col">Created_At</th>
+              <th scope="col">Author</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="dataList.length !== 0; else noTable">
+            <tr *ngFor="let item of dataList.hits | titleFilter:searchtext;let i=index" (click)="openModel(item)">
+              <td scope="row">{{i+1}}</td>
+              <td>{{item.title}}</td>
+              <td>{{item.url}}</td>
+              <td>{{item.created_at | date:'shortDate'}}</td>
+              <td>{{item.author}}</td>
+          </tbody>
+          <ng-template #noTable>
+            <div class="text-center">No data found.</div>
+          </ng-template>
+        </table>
+
+        <!-- Table -->
+
+      </div>
+    </div>
+  </div>
+  <!-- Table content -->
+
+</div>
+<!-- Main Content -->
